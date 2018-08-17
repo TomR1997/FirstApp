@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#282828"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/mediaPlayer_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="74dp"
+        android:background="#282828"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <ImageButton
+        android:id="@+id/button_repeat"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="24dp"
+        android:background="@null"
+        android:contentDescription="@string/button_repeat"
+        android:onClick="loop"
+        android:src="@drawable/baseline_loop_white_36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_previous"
+        app:layout_constraintStart_toStartOf="@+id/mediaPlayer_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/button_previous"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/button_previous"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="@string/button_previous"
+        android:onClick="previous"
+        android:src="@drawable/baseline_skip_previous_white_36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_play"
+        app:layout_constraintStart_toEndOf="@+id/button_repeat"
+        app:layout_constraintTop_toTopOf="@+id/button_play"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/button_play"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="@string/button_play"
+        android:onClick="play"
+        android:src="@drawable/baseline_play_circle_outline_white_48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mediaPlayer_toolbar"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
+        app:layout_constraintStart_toEndOf="@+id/button_previous"
+        app:layout_constraintTop_toTopOf="@+id/mediaPlayer_toolbar" />
+
+    <ImageButton
+        android:id="@+id/button_next"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="@string/button_next"
+        android:onClick="next"
+        android:src="@drawable/baseline_skip_next_white_36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_play"
+        app:layout_constraintEnd_toStartOf="@+id/button_shuffle"
+        app:layout_constraintTop_toTopOf="@+id/button_play"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/button_shuffle"
+        android:layout_width="36dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="24dp"
+        android:background="@null"
+        android:contentDescription="@string/button_shuffle"
+        android:onClick="shuffle"
+        android:src="@drawable/baseline_shuffle_white_36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="@+id/mediaPlayer_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/button_next"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="508dp"
+        android:background="#181818"
+        android:dividerHeight="0dp"
+        android:footerDividersEnabled="false"
+        android:progressTint="#1ed760"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+
+</android.support.constraint.ConstraintLayout>
+
+

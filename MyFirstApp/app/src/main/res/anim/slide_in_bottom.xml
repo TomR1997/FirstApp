@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+    <translate android:duration="@integer/open_activity_time"
+        android:fromYDelta="90%"
+        android:toYDelta="0%"/>
+    <!--<alpha android:duration="@integer/open_activity_time" android:fromAlpha="0.0" android:toAlpha="1.0"/>-->
+</set>
