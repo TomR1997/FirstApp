@@ -21,4 +21,6 @@
     <string name="songs">Songs</string>
     <string name="playlists">Playlists</string>
     <string name="Artists">Artists</string>
+    <string name="action_newPlaylist">New playlist</string>
+    <string name="playlistName">Playlist name</string>
 </resources>

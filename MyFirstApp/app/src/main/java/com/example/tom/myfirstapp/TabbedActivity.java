@@ -1,9 +1,11 @@
 package com.example.tom.myfirstapp;
 
+import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,6 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import domain.Playlist;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -67,14 +73,37 @@ public class TabbedActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        final TextView playlistName = findViewById(R.id.newPlaylistTextView);
+
+        if(item.getItemId() == R.id.action_newPlaylist) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Create new playlist")
+                .setView(R.layout.dialog_newplaylist)
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(playlistName.getText() == null || playlistName.getText() == ""){
+                        playlistName.setText("New Playlist");
+                    }
+
+                    Playlist playlist = new Playlist(playlistName.getText().toString());
+                }
+            })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         return super.onOptionsItemSelected(item);

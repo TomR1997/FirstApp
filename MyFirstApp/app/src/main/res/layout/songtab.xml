@@ -69,13 +69,13 @@
     <ListView
         android:id="@+id/songFragmentView"
         android:layout_width="0dp"
-        android:layout_height="444dp"
+        android:layout_height="425dp"
+        android:layout_marginTop="8dp"
         android:background="#181818"
         app:layout_constraintBottom_toTopOf="@+id/mediaPlayer_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
