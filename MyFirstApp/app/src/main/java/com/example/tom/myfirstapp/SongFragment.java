@@ -69,8 +69,14 @@ public class SongFragment extends Fragment {
         getLastPlayedSong();
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
         currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
+        currentPlayingTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                routeSongDetail(view);
+            }
+        });
 
-        Button playButton = fragmentView.findViewById(R.id.button_play);
+        ImageButton playButton = fragmentView.findViewById(R.id.button_play);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
