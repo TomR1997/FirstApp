@@ -237,6 +237,12 @@ public class SongFragment extends Fragment {
         if(!songJson.isEmpty()){
             musicController.setCurrentSong(gsonBuilder.create().fromJson(songJson, Song.class));
         }
+        else {
+            Song song = musicController.getSongs().get(0);
+            if (song != null){
+                musicController.setCurrentSong(song);
+            }
+        }
     }
 
     public void switchPlayButtonBackground(){
