@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,6 +69,14 @@ public class SongFragment extends Fragment {
         getLastPlayedSong();
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
         currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
+
+        Button playButton = fragmentView.findViewById(R.id.button_play);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                play(view);
+            }
+        });
 
         return fragmentView;
     }
