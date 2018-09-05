@@ -189,7 +189,7 @@ public class SongFragment extends Fragment {
 
     public void next(View view){
         handleNextSong();
-        //listView.setItemChecked(musicController.getNextShufflSong(), true);
+        //listView.setItemChecked(musicController.getNextShuffleSong(), true);
         //View songView = adapter.getView(musicController.getSongs().get(1).toString());
         //check & mark next song
     }

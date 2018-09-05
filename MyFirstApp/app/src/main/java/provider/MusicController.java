@@ -19,7 +19,7 @@ public class MusicController {
     private boolean isShuffling;
     private int loopCase = 0;
 
-    private int nextShufflSong = 0;
+    private int nextShuffleSong = 0;
 
     private Song currentSong;
 
@@ -163,7 +163,7 @@ public class MusicController {
             } else {
                 Random random = new Random();
                 nextSong = random.nextInt(songs.size() + 1);
-                nextShufflSong=nextSong;
+                nextShuffleSong =nextSong;
             }
         }
 
@@ -244,7 +244,7 @@ public class MusicController {
         return player != null ? player.getCurrentPosition() : 0;
     }
 
-    public int getNextShufflSong() {
-        return nextShufflSong;
+    public int getNextShuffleSong() {
+        return nextShuffleSong;
     }
 }
