@@ -1,7 +1,6 @@
 package provider;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
@@ -17,17 +16,14 @@ public class MusicController {
     private boolean isRepeating;
     private boolean isLooping;
     private boolean isShuffling;
-    private int loopCase = 0;
 
+    private int loopCase = 0;
     private int nextShuffleSong = 0;
 
     private Song currentSong;
 
     private List<Song> songs;
     private List<Song> shuffledSongs;
-
-    private static final String LAST_PLAYED_SONG = "lastPlayedSong";
-    private SharedPreferences sharedPreferences;
 
     public MusicController(){
         isRepeating = false;
