@@ -15,6 +15,8 @@ public final class FeedReaderContract {
         public static final String TABLE_NAME_ARTIST_SONG = "Artist_Song";
 
         public static final String COLUMN_NAME_TITLE = "Title";
+        public static final String COLUMN_NAME_NAME = "Name";
+        public static final String COLUMN_NAME_SONGPATH= "Path";
     }
 
     private static final String CREATE_TABLE_PLAYLIST =
@@ -23,9 +25,15 @@ public final class FeedReaderContract {
                     FeedEntry.COLUMN_NAME_TITLE + " TEXT)";
 
     private static final String CREATE_TABLE_SONG =
-            "CREATE TABLE " + FeedEntry._ID + "(" +
+            "CREATE TABLE " + FeedEntry.TABLE_NAME_SONG + "(" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY, " +
-                    FeedEntry.TABLE_NAME_SONG + " TEXT)";
+                    FeedEntry.COLUMN_NAME_TITLE + " TEXT)";
+
+    private static final String CREATE_TABLE_ARTIST =
+            "CREATE TABLE " + FeedEntry.TABLE_NAME_ARTIST + " (" +
+                    FeedEntry._ID + " INTEGER PRIMARY KEY, " +
+                    FeedEntry.COLUMN_NAME_NAME + " TEXT, " +
+                    FeedEntry.COLUMN_NAME_SONGPATH + " TEXT)";
 
 
     private static final String DROP_ALL =
