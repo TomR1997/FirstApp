@@ -34,7 +34,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
 
-import controller.MusicController;
+import provider.MusicController;
 import domain.Artist;
 import domain.Song;
 import util.PermissionManager;

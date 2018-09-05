@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
-import controller.MusicController;
+import provider.MusicController;
 import domain.Artist;
 import domain.Song;
 

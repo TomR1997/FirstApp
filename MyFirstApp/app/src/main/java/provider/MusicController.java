@@ -1,4 +1,4 @@
-package controller;
+package provider;
 
 import android.content.Context;
 import android.content.SharedPreferences;
