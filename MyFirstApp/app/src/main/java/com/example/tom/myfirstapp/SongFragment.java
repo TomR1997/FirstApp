@@ -2,10 +2,12 @@ package com.example.tom.myfirstapp;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,6 +28,8 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
+import database.MusicDbContract;
+import database.MusicDbHelper;
 import provider.MusicController;
 import domain.Artist;
 import domain.Song;
@@ -46,6 +50,8 @@ public class SongFragment extends Fragment {
     private PermissionManager permissionManager;
     private SharedPreferences sharedPreferences;
 
+    private MusicDbHelper musicDbHelper;
+
     private GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
 
     @Override
@@ -53,6 +59,7 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View fragmentView = inflater.inflate(R.layout.songtab, container, false);
+        musicDbHelper = new MusicDbHelper(fragmentView.getContext());
 
         adapter = new SongAdapter();
         listView = fragmentView.findViewById(R.id.songFragmentView);
@@ -121,6 +128,7 @@ public class SongFragment extends Fragment {
                 //String albumId = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
                 //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
                 musicController.getSongs().add(new Song(id, title, new Artist(artist), path));
+                insertSongs(new Song(id, title, new Artist(artist), path));
             }
             musicController.getShuffledSongs().addAll(musicController.getSongs());
             Collections.shuffle(musicController.getShuffledSongs());
@@ -129,14 +137,12 @@ public class SongFragment extends Fragment {
         }
     }
 
-    public void shuffle(View view){
-        musicController.shuffle();
-        switchShuffleBackground();
-    }
+    public void insertSongs(Song song){
+        SQLiteDatabase db = musicDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE, song.getTitle());
 
-    public void loop(View view){
-        musicController.loop();
-        switchLoopBackground();
+        long newRowId = db.insert(MusicDbContract.FeedEntry.TABLE_NAME_SONG, null, values);
     }
 
     public void play(Song song){
@@ -194,24 +200,8 @@ public class SongFragment extends Fragment {
         //check & mark next song
     }
 
-    public void previous(View view){
-        handlePreviousSong();
-    }
-
     public void handleNextSong(){
         musicController.play(getActivity(), musicController.handleNextSong());
-    }
-
-    public void handlePreviousSong(){
-        musicController.play(getActivity(), musicController.handlePreviousSong());
-    }
-
-    public void pause(){
-        musicController.pause();
-    }
-
-    public void releasePlayer(){
-        musicController.releasePlayer();
     }
 
     public void routeSongDetail(View view){
@@ -249,24 +239,6 @@ public class SongFragment extends Fragment {
             playButton.setImageResource(R.drawable.baseline_pause_circle_outline_white_48dp);
         } else {
             playButton.setImageResource(R.drawable.baseline_play_circle_outline_white_48dp);
-        }
-    }
-
-    public void switchLoopBackground(){
-        ImageButton loopButton = Objects.requireNonNull(getActivity()).findViewById(R.id.button_repeat);
-        if(musicController.isLooping()){
-            loopButton.setImageResource(R.drawable.baseline_loop_green_36dp);
-        } else {
-            loopButton.setImageResource(R.drawable.baseline_loop_white_36dp);
-        }
-    }
-
-    public void switchShuffleBackground(){
-        ImageButton shuffleButton = Objects.requireNonNull(getActivity()).findViewById(R.id.button_shuffle);
-        if(musicController.isShuffling()){
-            shuffleButton.setImageResource(R.drawable.baseline_shuffle_green_36dp);
-        } else {
-            shuffleButton.setImageResource(R.drawable.baseline_shuffle_white_36dp);
         }
     }
 

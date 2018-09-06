@@ -8,13 +8,14 @@ public class MusicDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "MusicDb.db";
 
-    public MusicDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MusicDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(MusicDbContract.CREATE_ALL);
+        //db.execSQL(MusicDbContract.CREATE_TABLE_SONG);
     }
 
     @Override
