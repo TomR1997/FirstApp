@@ -20,6 +20,7 @@ Features:
 - Switch themes
 - Search bar
 - Options screen
+- Save preferences (shuffle, repeat)
 
 Bugs:
 - Next song doesn't get marked
