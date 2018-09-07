@@ -17,6 +17,8 @@ public class MusicDbHelper extends SQLiteOpenHelper {
         db.execSQL(MusicDbContract.CREATE_TABLE_SONG);
         db.execSQL(MusicDbContract.CREATE_TABLE_PLAYLIST);
         db.execSQL(MusicDbContract.CREATE_TABLE_ARTIST);
+        db.execSQL(MusicDbContract.CREATE_TABLE_PLAYLIST_SONG);
+        db.execSQL(MusicDbContract.CREATE_TABLE_ARTIST_SONG);
     }
 
     @Override

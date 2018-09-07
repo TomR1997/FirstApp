@@ -39,13 +39,13 @@ public final class MusicDbContract {
                     FeedEntry.KEY_NAME_ARTIST + " INTEGER PRIMARY KEY, " +
                     FeedEntry.COLUMN_NAME_NAME + " TEXT) ";
 
-    private static final String CREATE_TABLE_PLAYLIST_SONG =
+    public static final String CREATE_TABLE_PLAYLIST_SONG =
             "CREATE TABLE " + FeedEntry.TABLE_NAME_PLAYLIST_SONG + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY, " +
                     FeedEntry.KEY_NAME_PLAYLIST + " INTEGER, " +
                     FeedEntry.KEY_NAME_SONG + " INTEGER) ";
 
-    private static final String CREATE_TABLE_ARTIST_SONG =
+    public static final String CREATE_TABLE_ARTIST_SONG =
             "CREATE TABLE " + FeedEntry.TABLE_NAME_ARTIST_SONG + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY, " +
                     FeedEntry.KEY_NAME_ARTIST + " INTEGER, " +
