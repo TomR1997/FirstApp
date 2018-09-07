@@ -43,12 +43,13 @@ public class MusicController {
                 isLooping = true;
                 break;
             case 1:
-                isRepeating = false;
+                isLooping = false;
+                isRepeating = true;
                 break;
             case 2:
                 isLooping = false;
-                isRepeating = true;
-                loopCase = 0;
+                isRepeating = false;
+                loopCase = -1;
                 break;
         }
         loopCase++;

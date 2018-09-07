@@ -303,9 +303,11 @@ public class MainActivity extends AppCompatActivity {
     public void switchLoopBackground(){
         ImageButton loopButton = findViewById(R.id.button_repeat);
         if(musicController.isLooping()){
-            loopButton.setImageResource(R.drawable.baseline_loop_green_36dp);
-        } else {
-            loopButton.setImageResource(R.drawable.baseline_loop_white_36dp);
+            loopButton.setImageResource(R.drawable.ic_repeat_green_36dp);
+        } else if (musicController.isRepeating()){
+            loopButton.setImageResource(R.drawable.ic_repeat_one_green_36dp);
+        } else{
+            loopButton.setImageResource(R.drawable.ic_repeat_white_36dp);
         }
     }
 

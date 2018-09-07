@@ -41,7 +41,7 @@
         android:background="@null"
         android:contentDescription="@string/button_repeat"
         android:onClick="loop"
-        android:src="@drawable/baseline_loop_white_36dp"
+        android:src="@drawable/ic_repeat_white_36dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_previous"
         app:layout_constraintStart_toStartOf="@+id/mediaPlayer_toolbar"
         app:layout_constraintTop_toTopOf="@+id/button_previous"
