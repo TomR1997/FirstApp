@@ -221,6 +221,9 @@ public class MusicController {
     }
 
     public Song getCurrentSong() {
+        if (currentSong == null && songs.size() > 0){
+            currentSong = songs.get(1);
+        }
         return currentSong;
     }
 
