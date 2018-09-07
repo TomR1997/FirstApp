@@ -28,6 +28,7 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
+import dao.SongDAO;
 import database.MusicDbContract;
 import database.MusicDbHelper;
 import provider.MusicController;
@@ -50,7 +51,7 @@ public class SongFragment extends Fragment {
     private PermissionManager permissionManager;
     private SharedPreferences sharedPreferences;
 
-    private MusicDbHelper musicDbHelper;
+    private SongDAO songDao;
 
     private GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
 
@@ -59,7 +60,8 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View fragmentView = inflater.inflate(R.layout.songtab, container, false);
-        musicDbHelper = new MusicDbHelper(fragmentView.getContext());
+
+        songDao = new SongDAO(fragmentView.getContext());
 
         adapter = new SongAdapter();
         listView = fragmentView.findViewById(R.id.songFragmentView);
@@ -127,22 +129,16 @@ public class SongFragment extends Fragment {
                 String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                 //String albumId = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
                 //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
-                musicController.getSongs().add(new Song(id, title, new Artist(artist), path));
-                insertSongs(new Song(id, title, new Artist(artist), path));
+
+                Song newSong = new Song(id, title, new Artist(artist), path);
+                musicController.getSongs().add(newSong);
+                songDao.insert(newSong);
             }
             musicController.getShuffledSongs().addAll(musicController.getSongs());
             Collections.shuffle(musicController.getShuffledSongs());
 
             cursor.close();
         }
-    }
-
-    public void insertSongs(Song song){
-        SQLiteDatabase db = musicDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE, song.getTitle());
-
-        long newRowId = db.insert(MusicDbContract.FeedEntry.TABLE_NAME_SONG, null, values);
     }
 
     public void play(Song song){

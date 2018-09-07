@@ -20,6 +20,7 @@ public class SongDAO {
     public boolean insert(Song song){
         ContentValues values = new ContentValues();
         values.put(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE, song.getTitle());
+        values.put(MusicDbContract.FeedEntry.COLUMN_NAME_SONG_PATH, song.getPath());
 
         return db.insert(MusicDbContract.FeedEntry.TABLE_NAME_SONG, null, values) > 0;
     }

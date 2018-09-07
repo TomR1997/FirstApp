@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MusicDbHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "MusicDb.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "MusicDb.db";
 
     public MusicDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -14,8 +14,9 @@ public class MusicDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(MusicDbContract.CREATE_ALL);
-        //db.execSQL(MusicDbContract.CREATE_TABLE_SONG);
+        db.execSQL(MusicDbContract.CREATE_TABLE_SONG);
+        db.execSQL(MusicDbContract.CREATE_TABLE_PLAYLIST);
+        db.execSQL(MusicDbContract.CREATE_TABLE_ARTIST);
     }
 
     @Override

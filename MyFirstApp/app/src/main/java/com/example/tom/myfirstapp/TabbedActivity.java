@@ -1,5 +1,6 @@
 package com.example.tom.myfirstapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -20,10 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import dao.PlaylistDAO;
 import domain.Playlist;
 
 public class TabbedActivity extends AppCompatActivity {
@@ -79,34 +82,35 @@ public class TabbedActivity extends AppCompatActivity {
             return true;
         }
 
-        final TextView playlistName = findViewById(R.id.newPlaylistTextView);
-
         if(item.getItemId() == R.id.action_newPlaylist) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Create new playlist")
-                .setView(R.layout.dialog_newplaylist)
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if(playlistName.getText() == null || playlistName.getText() == ""){
-                        playlistName.setText("New Playlist");
-                    }
-
-                    Playlist playlist = new Playlist(playlistName.getText().toString());
-                }
-            })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            newPlaylistDialog(this);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void newPlaylistDialog(Context c) {
+        final EditText playlistText = new EditText(c);
+        final PlaylistDAO playlistDao = new PlaylistDAO(this);
+        AlertDialog dialog = new AlertDialog.Builder(c)
+                .setTitle("Create new playlist")
+                .setView(playlistText)
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String playlistName = String.valueOf(playlistText.getText());
+
+                        if(playlistName == null || playlistName.equals("")){
+                            playlistName = "New Playlist";
+                        }
+
+                        Playlist playlist = new Playlist(playlistName);
+                        playlistDao.insert(playlist);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 
 //    /**
