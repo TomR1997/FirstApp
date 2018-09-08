@@ -23,6 +23,7 @@ Features:
 - Save preferences (shuffle, repeat)
 
 Bugs:
+- Recycler view onClick/mark song
 - Next song doesn't get marked
 - List Artist should be hashset
 - Last played song doens't get updated (onClick)
