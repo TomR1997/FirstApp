@@ -75,7 +75,7 @@ public class SongFragment extends Fragment {
             getMusic();
         }
 
-        rAdapter = new SongAdapter(musicController.getSongs());
+        rAdapter = new SongAdapter(musicController.getSongs(), fragmentView.getContext());
         //rAdapter = new SongAdapter(songDao.getAll());
         recyclerView.setAdapter(rAdapter);
 

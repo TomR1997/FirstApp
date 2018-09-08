@@ -23,4 +23,8 @@
     <string name="Artists">Artists</string>
     <string name="action_newPlaylist">New playlist</string>
     <string name="playlistName">Playlist name</string>
+    <string name="menu_action_add_queue">Add to queue</string>
+    <string name="menu_action_add_playlist">Add to playlist</string>
+    <string name="menu_action_delete_song">Delete song</string>
+    <string name="menu">Menu</string>
 </resources>

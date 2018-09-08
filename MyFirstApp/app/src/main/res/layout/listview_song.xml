@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/relativeLayout">
@@ -9,7 +10,7 @@
         android:id="@+id/songTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
@@ -17,7 +18,7 @@
         android:singleLine="true"
         android:textColor="@drawable/listview_text"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewOptions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,13 +27,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="sans-serif"
         android:textColor="#aaaaaa"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewOptions"
         app:layout_constraintStart_toStartOf="@+id/songTextView"
         app:layout_constraintTop_toBottomOf="@+id/songTextView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/textViewOptions"
+        android:layout_width="50dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:src="@drawable/ic_more_vert_white_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/artistTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/songTextView"
+        android:contentDescription="@string/menu" />
 </android.support.constraint.ConstraintLayout>
