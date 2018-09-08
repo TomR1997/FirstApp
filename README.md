@@ -4,7 +4,7 @@
 
 Features:
 - Playlist
-  - ~~Create playlists
+  - ~~Create playlists~~
   - Add songs to playlists
   - Delete songs from playlists
   - Basic playlist (favorites, last added)
