@@ -4,7 +4,7 @@
 
 Features:
 - Playlist
-  - Create playlists
+  - ~~Create playlists
   - Add songs to playlists
   - Delete songs from playlists
   - Basic playlist (favorites, last added)
@@ -24,6 +24,7 @@ Features:
 
 Bugs:
 - Next song doesn't get marked
-- List<Artist> should be hashset
+- List Artist should be hashset
 - Last played song doens't get updated (onClick)
 - Background shouldn't be moving in animation to SongDetail
+- RecyclerView moves mediabar
