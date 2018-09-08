@@ -24,7 +24,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/mediaPlayer_toolbar"
         android:layout_width="0dp"
-        android:layout_height="74dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="52dp"
         android:background="#282828"
         android:minHeight="?attr/actionBarSize"
@@ -66,16 +66,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mediaPlayer_toolbar" />
 
-    <ListView
-        android:id="@+id/songFragmentView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/songRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="425dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
         android:background="#181818"
         app:layout_constraintBottom_toTopOf="@+id/mediaPlayer_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

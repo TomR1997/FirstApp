@@ -13,6 +13,12 @@ public class Song {
         this.path = path;
     }
 
+    public Song(String title, Artist artist, String path){
+        this.title = title;
+        this.artist = artist;
+        this.path = path;
+    }
+
     public long getId() {
         return id;
     }

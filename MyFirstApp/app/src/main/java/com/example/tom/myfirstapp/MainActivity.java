@@ -380,8 +380,8 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.listview_song, null);
 
-            TextView songView = convertView.findViewById(R.id.songFragmentView);
-            TextView artistView = convertView.findViewById(R.id.artistView);
+            TextView songView = convertView.findViewById(R.id.songTextView);
+            TextView artistView = convertView.findViewById(R.id.artistTextView);
 
             songView.setText(musicController.getSongs().get(position).getTitle());
             artistView.setText(musicController.getSongs().get(position).getArtist().getName());

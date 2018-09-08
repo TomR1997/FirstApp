@@ -2,16 +2,16 @@ package com.example.tom.myfirstapp;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,12 +28,11 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
+import adapter.SongAdapter;
 import dao.SongDAO;
-import database.MusicDbContract;
-import database.MusicDbHelper;
-import provider.MusicController;
 import domain.Artist;
 import domain.Song;
+import provider.MusicController;
 import util.PermissionManager;
 
 public class SongFragment extends Fragment {
@@ -45,7 +44,11 @@ public class SongFragment extends Fragment {
     private static final String PREF_LOOPING = "prefLooping";
     private static final String PREF_REPEATING = "prefRepeating";
 
-    private SongAdapter adapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private SongBaseAdapter adapter;
     private ListView listView;
     private MusicController musicController;
     private PermissionManager permissionManager;
@@ -61,17 +64,26 @@ public class SongFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.songtab, container, false);
 
+        recyclerView = fragmentView.findViewById(R.id.songRecyclerView);
+        layoutManager = new LinearLayoutManager(fragmentView.getContext());
+        recyclerView.setLayoutManager(layoutManager);
         songDao = new SongDAO(fragmentView.getContext());
 
-        adapter = new SongAdapter();
-        listView = fragmentView.findViewById(R.id.songFragmentView);
-
-        musicController = new MusicController();
         permissionManager = new PermissionManager();
+        musicController = new MusicController();
+        if(permissionManager.requestPermissionFragment(getActivity())){
+            getMusic();
+        }
 
+        rAdapter = new SongAdapter(musicController.getSongs());
+        //rAdapter = new SongAdapter(songDao.getAll());
+        recyclerView.setAdapter(rAdapter);
+
+        /*adapter = new SongBaseAdapter();
+        listView = fragmentView.findViewById(R.id.songTextView);
         if(permissionManager.requestPermissionFragment(getActivity())){
             addToListView();
-        }
+        }*/
 
         getLastPlayedSong();
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
@@ -244,7 +256,7 @@ public class SongFragment extends Fragment {
         Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 
-    class SongAdapter extends BaseAdapter {
+    class SongBaseAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -266,8 +278,8 @@ public class SongFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.listview_song, null);
 
-            TextView songView = convertView.findViewById(R.id.songFragmentView);
-            TextView artistView = convertView.findViewById(R.id.artistView);
+            TextView songView = convertView.findViewById(R.id.songTextView);
+            TextView artistView = convertView.findViewById(R.id.artistTextView);
 
             songView.setText(musicController.getSongs().get(position).getTitle());
             artistView.setText(musicController.getSongs().get(position).getArtist().getName());

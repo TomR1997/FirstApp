@@ -10,33 +10,35 @@ import com.example.tom.myfirstapp.R;
 
 import java.util.List;
 
-import domain.Playlist;
+import domain.Song;
 
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyViewHolder> {
-    private List<Playlist> mDataset;
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> {
+    private List<Song> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        TextView mTextView;
+        TextView songTextView;
+        TextView artistTextView;
 
         MyViewHolder(View v) {
             super(v);
-            mTextView = itemView.findViewById(R.id.playlistName);
+            songTextView = itemView.findViewById(R.id.songTextView);
+            artistTextView = itemView.findViewById(R.id.artistTextView);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PlaylistAdapter(List<Playlist> myDataset) {
+    public SongAdapter(List<Song> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public PlaylistAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_playlist, parent, false);
+    public SongAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_song, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -46,7 +48,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.MyView
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset.get(position).getTitle());
+        holder.songTextView.setText(mDataset.get(position).getTitle());
+        holder.artistTextView.setText(mDataset.get(position).getArtist().getName());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
