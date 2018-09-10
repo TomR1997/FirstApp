@@ -52,7 +52,7 @@ public final class MusicDbContract {
             "CREATE TABLE " + FeedEntry.TABLE_NAME_ARTIST_SONG + " (" +
                     FeedEntry.KEY_NAME_ARTIST + " INTEGER, " +
                     FeedEntry.KEY_NAME_SONG + " INTEGER, " +
-                    "FOREIGN KEY(" + FeedEntry.TABLE_NAME_ARTIST + ") REFERENCES " +
+                    "FOREIGN KEY(" + FeedEntry.KEY_NAME_ARTIST + ") REFERENCES " +
                     FeedEntry.TABLE_NAME_ARTIST + "(" + FeedEntry.KEY_NAME_ARTIST + "), " +
                     "FOREIGN KEY(" + FeedEntry.KEY_NAME_SONG + ") REFERENCES " +
                     FeedEntry.TABLE_NAME_SONG + "(" + FeedEntry.KEY_NAME_SONG + "))";
