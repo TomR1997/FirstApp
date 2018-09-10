@@ -21,6 +21,8 @@ Features:
 - Search bar
 - Options screen
 - Save preferences (shuffle, repeat)
+- UI manager
+- Prefs manager
 
 Bugs:
 - Recycler view onClick/mark song
