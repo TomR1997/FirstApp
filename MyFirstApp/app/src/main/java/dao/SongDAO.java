@@ -43,6 +43,7 @@ public class SongDAO {
             while (cursor.moveToNext()){
                 String title = cursor.getString(cursor.getColumnIndex(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE));
                 String path = cursor.getString(cursor.getColumnIndex(MusicDbContract.FeedEntry.COLUMN_NAME_SONG_PATH));
+                //TODO GET ARTIST
                 songs.add(new Song(title, new Artist("test"), path));
             }
         }

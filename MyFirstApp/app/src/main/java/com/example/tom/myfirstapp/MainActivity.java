@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private PermissionManager permissionManager;
     private Handler progressHandler = new Handler();
     private ProgressBar progressBar;
-    private SongAdapter adapter;
+    private SongBaseAdapter adapter;
     private ListView listView;
 
     private GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new SongAdapter();
+        adapter = new SongBaseAdapter();
         listView = findViewById(R.id.listView);
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
@@ -358,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    class SongAdapter extends BaseAdapter{
+    class SongBaseAdapter extends BaseAdapter{
 
         @Override
         public int getCount() {

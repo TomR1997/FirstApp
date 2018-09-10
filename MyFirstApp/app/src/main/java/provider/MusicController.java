@@ -73,23 +73,24 @@ public class MusicController {
     }
 
     public void play(Context context){
-        if (currentSong != null) {
-            if (player == null) {
+        if (currentSong == null) {
+            getCurrentSong();
+        }
+        if (player == null) {
 
-                player = MediaPlayer.create(context, Uri.parse(currentSong.getPath()));
-                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        handleNextSong();
-                    }
-                });
-            }
-            if (player != null){
-                if (player.isPlaying()) {
-                    pause();
-                } else {
-                    player.start();
+            player = MediaPlayer.create(context, Uri.parse(currentSong.getPath()));
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    handleNextSong();
                 }
+            });
+        }
+        if (player != null){
+            if (player.isPlaying()) {
+                pause();
+            } else {
+                player.start();
             }
         }
     }

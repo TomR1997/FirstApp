@@ -64,26 +64,27 @@ public class SongFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.songtab, container, false);
 
-        recyclerView = fragmentView.findViewById(R.id.songRecyclerView);
-        layoutManager = new LinearLayoutManager(fragmentView.getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView = fragmentView.findViewById(R.id.songRecyclerView);
+        //layoutManager = new LinearLayoutManager(fragmentView.getContext());
+        //recyclerView.setLayoutManager(layoutManager);
         songDao = new SongDAO(fragmentView.getContext());
 
         permissionManager = new PermissionManager();
         musicController = new MusicController();
-        if(permissionManager.requestPermissionFragment(getActivity())){
+
+        /*if(permissionManager.requestPermissionFragment(getActivity())){
             getMusic();
-        }
+        }*/
 
-        rAdapter = new SongAdapter(musicController.getSongs(), fragmentView.getContext());
-        //rAdapter = new SongAdapter(songDao.getAll());
-        recyclerView.setAdapter(rAdapter);
+        //rAdapter = new SongAdapter(musicController.getSongs(), fragmentView.getContext());
+        //rAdapter = new SongAdapter(songDao.getAll(), fragmentView.getContext());
+        //recyclerView.setAdapter(rAdapter);
 
-        /*adapter = new SongBaseAdapter();
-        listView = fragmentView.findViewById(R.id.songTextView);
+        adapter = new SongBaseAdapter();
+        listView = fragmentView.findViewById(R.id.songRecyclerView);
         if(permissionManager.requestPermissionFragment(getActivity())){
             addToListView();
-        }*/
+        }
 
         getLastPlayedSong();
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
