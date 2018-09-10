@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import adapter.PlaylistAdapter;
 import dao.PlaylistDAO;
-import domain.Playlist;
 
 public class PlaylistFragment extends Fragment{
     private RecyclerView recyclerView;

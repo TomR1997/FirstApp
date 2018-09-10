@@ -41,15 +41,21 @@ public final class MusicDbContract {
 
     public static final String CREATE_TABLE_PLAYLIST_SONG =
             "CREATE TABLE " + FeedEntry.TABLE_NAME_PLAYLIST_SONG + " (" +
-                    FeedEntry._ID + " INTEGER PRIMARY KEY, " +
                     FeedEntry.KEY_NAME_PLAYLIST + " INTEGER, " +
-                    FeedEntry.KEY_NAME_SONG + " INTEGER) ";
+                    FeedEntry.KEY_NAME_SONG + " INTEGER, " +
+                    "FOREIGN KEY(" + FeedEntry.KEY_NAME_PLAYLIST + ") REFERENCES " +
+                    FeedEntry.TABLE_NAME_PLAYLIST + "("+ FeedEntry.KEY_NAME_PLAYLIST + "), " +
+                    "FOREIGN KEY(" + FeedEntry.KEY_NAME_SONG + ") REFERENCES " +
+                    FeedEntry.TABLE_NAME_SONG + "(" + FeedEntry.KEY_NAME_SONG + ")) ";
 
     public static final String CREATE_TABLE_ARTIST_SONG =
             "CREATE TABLE " + FeedEntry.TABLE_NAME_ARTIST_SONG + " (" +
-                    FeedEntry._ID + " INTEGER PRIMARY KEY, " +
                     FeedEntry.KEY_NAME_ARTIST + " INTEGER, " +
-                    FeedEntry.KEY_NAME_SONG + " INTEGER) ";
+                    FeedEntry.KEY_NAME_SONG + " INTEGER, " +
+                    "FOREIGN KEY(" + FeedEntry.TABLE_NAME_ARTIST + ") REFERENCES " +
+                    FeedEntry.TABLE_NAME_ARTIST + "(" + FeedEntry.KEY_NAME_ARTIST + "), " +
+                    "FOREIGN KEY(" + FeedEntry.KEY_NAME_SONG + ") REFERENCES " +
+                    FeedEntry.TABLE_NAME_SONG + "(" + FeedEntry.KEY_NAME_SONG + "))";
 
     public static final String CREATE_ALL =
             CREATE_TABLE_PLAYLIST + CREATE_TABLE_SONG + CREATE_TABLE_ARTIST /*+
