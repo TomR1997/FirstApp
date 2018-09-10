@@ -15,7 +15,7 @@ Features:
   - Delete songs
   - Get song/album cover
 - Splash screen populate list/database
-- Implement Sqlite database
+- ~~Implement Sqlite database~~
 - Able to keep music playing after closing
 - Switch themes
 - Search bar
