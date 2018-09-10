@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
+import dao.ArtistDAO;
 import dao.PlaylistDAO;
 import dao.SongDAO;
 import domain.Artist;
@@ -56,6 +57,7 @@ public class SongFragment extends Fragment {
 
     private SongDAO songDao;
     private PlaylistDAO playlistDao;
+    private ArtistDAO artistDao;
 
     private GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
 
@@ -70,6 +72,7 @@ public class SongFragment extends Fragment {
         //recyclerView.setLayoutManager(layoutManager);
         songDao = new SongDAO(fragmentView.getContext());
         playlistDao = new PlaylistDAO(fragmentView.getContext());
+        artistDao = new ArtistDAO(fragmentView.getContext());
 
         permissionManager = new PermissionManager();
         musicController = new MusicController();
@@ -145,9 +148,14 @@ public class SongFragment extends Fragment {
                 //String albumId = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
                 //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
 
-                Song newSong = new Song(id, title, new Artist(artist), path);
+                Artist newArtist = new Artist(artist);
+                Song newSong = new Song(id, title, newArtist, path);
+
                 musicController.getSongs().add(newSong);
                 songDao.save(newSong);
+                if(!newArtist.getName().equals("Unknown artist")){
+                    artistDao.save(newArtist);
+                }
             }
             musicController.getShuffledSongs().addAll(musicController.getSongs());
             Collections.shuffle(musicController.getShuffledSongs());
