@@ -23,7 +23,7 @@ public class SongDAO {
         db = musicDbHelper.getWritableDatabase();
     }
 
-    public boolean insert(Song song){
+    public boolean save(Song song){
         ContentValues values = new ContentValues();
         values.put(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE, song.getTitle());
         values.put(MusicDbContract.FeedEntry.COLUMN_NAME_SONG_PATH, song.getPath());

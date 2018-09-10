@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Playlist {
 
+    private long id;
     private String title;
     private List<Song> songs;
 
@@ -33,4 +34,9 @@ public class Playlist {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
+
+    public long getId() {
+        return id;
+    }
+
 }

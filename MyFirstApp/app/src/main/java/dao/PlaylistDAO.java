@@ -11,6 +11,7 @@ import java.util.List;
 import database.MusicDbContract;
 import database.MusicDbHelper;
 import domain.Playlist;
+import domain.Song;
 
 public class PlaylistDAO {
     private MusicDbHelper musicDbHelper;
@@ -21,7 +22,7 @@ public class PlaylistDAO {
         db = musicDbHelper.getWritableDatabase();
     }
 
-    public boolean insert(Playlist playlist){
+    public boolean save(Playlist playlist){
         ContentValues values = new ContentValues();
         values.put(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE, playlist.getTitle());
 
@@ -45,5 +46,14 @@ public class PlaylistDAO {
        cursor.close();
 
        return playlists;
+    }
+
+    public boolean addSong(Playlist playlist, Song song){
+        ContentValues values = new ContentValues();
+
+        values.put(MusicDbContract.FeedEntry.KEY_NAME_PLAYLIST, playlist.getId());
+        values.put(MusicDbContract.FeedEntry.KEY_NAME_SONG, playlist.getId());
+
+        return db.insert(MusicDbContract.FeedEntry.TABLE_NAME_PLAYLIST_SONG, null, values) > 0;
     }
 }

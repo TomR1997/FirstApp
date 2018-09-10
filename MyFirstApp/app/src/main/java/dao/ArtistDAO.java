@@ -17,7 +17,7 @@ public class ArtistDAO {
         db = musicDbHelper.getWritableDatabase();
     }
 
-    public boolean insert(Artist artist){
+    public boolean save(Artist artist){
         ContentValues values = new ContentValues();
         values.put(MusicDbContract.FeedEntry.TABLE_NAME_ARTIST, artist.getName());
 

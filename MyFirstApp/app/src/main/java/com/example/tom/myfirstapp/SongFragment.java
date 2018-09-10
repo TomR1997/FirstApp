@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,9 +27,10 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Objects;
 
-import adapter.SongAdapter;
+import dao.PlaylistDAO;
 import dao.SongDAO;
 import domain.Artist;
+import domain.Playlist;
 import domain.Song;
 import provider.MusicController;
 import util.PermissionManager;
@@ -55,6 +55,7 @@ public class SongFragment extends Fragment {
     private SharedPreferences sharedPreferences;
 
     private SongDAO songDao;
+    private PlaylistDAO playlistDao;
 
     private GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
 
@@ -68,6 +69,7 @@ public class SongFragment extends Fragment {
         //layoutManager = new LinearLayoutManager(fragmentView.getContext());
         //recyclerView.setLayoutManager(layoutManager);
         songDao = new SongDAO(fragmentView.getContext());
+        playlistDao = new PlaylistDAO(fragmentView.getContext());
 
         permissionManager = new PermissionManager();
         musicController = new MusicController();
@@ -145,7 +147,7 @@ public class SongFragment extends Fragment {
 
                 Song newSong = new Song(id, title, new Artist(artist), path);
                 musicController.getSongs().add(newSong);
-                songDao.insert(newSong);
+                songDao.save(newSong);
             }
             musicController.getShuffledSongs().addAll(musicController.getSongs());
             Collections.shuffle(musicController.getShuffledSongs());
