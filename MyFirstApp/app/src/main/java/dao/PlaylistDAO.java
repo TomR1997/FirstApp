@@ -30,7 +30,8 @@ public class PlaylistDAO {
     }
 
     public boolean delete(long id){
-        return db.delete(MusicDbContract.FeedEntry.TABLE_NAME_PLAYLIST, MusicDbContract.FeedEntry.KEY_NAME_PLAYLIST + " = " + id, null) > 0;
+        return db.delete(MusicDbContract.FeedEntry.TABLE_NAME_PLAYLIST,
+                MusicDbContract.FeedEntry.KEY_NAME_PLAYLIST + " = " + id, null) > 0;
     }
 
     public List<Playlist> getAll(){
@@ -55,5 +56,11 @@ public class PlaylistDAO {
         values.put(MusicDbContract.FeedEntry.KEY_NAME_SONG, playlist.getId());
 
         return db.insert(MusicDbContract.FeedEntry.TABLE_NAME_PLAYLIST_SONG, null, values) > 0;
+    }
+
+    public boolean deleteSong(long playlistId, long songId){
+        String selection = MusicDbContract.FeedEntry.KEY_NAME_PLAYLIST + " = " + playlistId +
+                " AND " + MusicDbContract.FeedEntry.KEY_NAME_SONG + " = " + songId;
+        return db.delete(MusicDbContract.FeedEntry.TABLE_NAME_PLAYLIST_SONG, selection, null) > 0;
     }
 }
