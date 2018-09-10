@@ -17,7 +17,9 @@ import com.example.tom.myfirstapp.R;
 
 import java.util.List;
 
+import dao.SongDAO;
 import domain.Song;
+import provider.MusicController;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> {
     private List<Song> mDataset;
@@ -27,12 +29,23 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
         TextView songTextView;
         TextView artistTextView;
         ImageButton textViewOptions;
+        private MusicController musicController = new MusicController();
+        private SongDAO songDao;
 
         MyViewHolder(View v) {
             super(v);
+            songDao = new SongDAO(v.getContext());
+            musicController.setSongs(songDao.getAll());
             songTextView = itemView.findViewById(R.id.songTextView);
             artistTextView = itemView.findViewById(R.id.artistTextView);
             textViewOptions = itemView.findViewById(R.id.textViewOptions);
+
+            /*songTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    musicController.play(view.getContext());
+                }
+            });*/
         }
     }
 

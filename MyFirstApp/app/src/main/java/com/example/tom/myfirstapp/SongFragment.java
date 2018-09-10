@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import dao.ArtistDAO;
@@ -268,20 +269,22 @@ public class SongFragment extends Fragment {
     }
 
     class SongBaseAdapter extends BaseAdapter {
+        private Context context;
+        private List<Song> songs = musicController.getSongs();
 
         @Override
         public int getCount() {
-            return musicController.getSongs().size();
+            return songs.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return songs.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @SuppressLint({"ViewHolder", "InflateParams"})
@@ -292,10 +295,8 @@ public class SongFragment extends Fragment {
             TextView songView = convertView.findViewById(R.id.songTextView);
             TextView artistView = convertView.findViewById(R.id.artistTextView);
 
-            songView.setText(musicController.getSongs().get(position).getTitle());
-            artistView.setText(musicController.getSongs().get(position).getArtist().getName());
-
-            //songView.setTag(musicController.getSongs().get(position).getTitle());
+            songView.setText(songs.get(position).getTitle());
+            artistView.setText(songs.get(position).getArtist().getName());
 
             return convertView;
         }
