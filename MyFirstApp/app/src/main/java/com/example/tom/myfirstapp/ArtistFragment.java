@@ -79,8 +79,6 @@ public class ArtistFragment extends Fragment {
                 //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
                 musicController.getSongs().add(new Song(id, title, new Artist(artist), path));
             }
-            musicController.getShuffledSongs().addAll(musicController.getSongs());
-            Collections.shuffle(musicController.getShuffledSongs());
 
             cursor.close();
         }

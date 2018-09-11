@@ -18,19 +18,17 @@ public class MusicController {
     private boolean isShuffling;
 
     private int loopCase = 0;
-    private int nextShuffleSong = 0;
 
+    private Song lastSong;
     private Song currentSong;
 
     private List<Song> songs;
-    private List<Song> shuffledSongs;
 
     public MusicController(){
         isRepeating = false;
         isLooping = false;
         isShuffling = false;
         songs = new ArrayList<>();
-        shuffledSongs = new ArrayList<>();
     }
 
     public void shuffle(){
@@ -63,7 +61,7 @@ public class MusicController {
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    handleNextSong();
+                    getNextSong();
                 }
             });
         }
@@ -82,7 +80,7 @@ public class MusicController {
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    handleNextSong();
+                    getNextSong();
                 }
             });
         }
@@ -95,79 +93,53 @@ public class MusicController {
         }
     }
 
-    public Song handleNextSong(){
+    public Song getNextSong(){
+        int currentSongIndex = songs.indexOf(currentSong);
+        int nextSong;
+        Random random = new Random();
+
         if(isRepeating){
             return currentSong;
-        } else if (isLooping && isShuffling){
-            return getNextSong(currentSong, true, true);
-        } else if (isLooping){
-            return getNextSong(currentSong, true, false);
-        } else if (isShuffling) {
-            return getNextSong(currentSong, false, true);
-        } else{
-            return getNextSong(currentSong, false, false);
-        }
-    }
-
-    public Song handlePreviousSong(){
-        if(isRepeating){
-            return currentSong;
-        } else if (isLooping && isShuffling){
-            return getPreviousSong(currentSong, true, true);
-        } else if (isLooping){
-            return getPreviousSong(currentSong, true, false);
-        } else if (isShuffling) {
-            return getPreviousSong(currentSong, false, true);
+        } else if (isShuffling){
+            nextSong = random.nextInt(songs.size() + 1);
         } else {
-            return getPreviousSong(currentSong, false, false);
-        }
-    }
-
-
-
-    private Song getPreviousSong(Song currentSong, boolean isLooping, boolean isShuffling){
-        int currentSongIndex;
-        if (isShuffling){
-            currentSongIndex = shuffledSongs.indexOf(currentSong);
-        } else {
-            currentSongIndex = songs.indexOf(currentSong);
-        }
-
-        int nextSong = currentSongIndex - 1;
-        if (nextSong <= 0){
-            if (isLooping) {
-                nextSong = songs.size();
-            } else {
-                Random random = new Random();
-                nextSong = random.nextInt(songs.size() + 1);
+            nextSong = currentSongIndex + 1;
+            if (nextSong >= songs.size()){
+                if (isLooping){
+                    nextSong = 0;
+                }
+                else {
+                    nextSong = random.nextInt(songs.size() + 1);
+                }
             }
         }
 
+        lastSong = currentSong;
         return songs.get(nextSong);
     }
 
-    private Song getNextSong(Song currentSong, boolean isLooping, boolean isShuffling){
-        int currentSongIndex;
-        if (isShuffling){
-            currentSongIndex = shuffledSongs.indexOf(currentSong);
-        } else {
-            currentSongIndex = songs.indexOf(currentSong);
-        }
+    public Song getPreviousSong(){
+        int currentSongIndex = songs.indexOf(currentSong);
+        int previousSong;
 
-        int nextSong = currentSongIndex + 1;
-        if (nextSong > songs.size()){
-            if (isLooping) {
-                nextSong = 1;
-            } else {
-                Random random = new Random();
-                nextSong = random.nextInt(songs.size() + 1);
-                nextShuffleSong =nextSong;
+        if(isRepeating){
+            return currentSong;
+        } else if(isShuffling){
+            return lastSong;
+        } else {
+            previousSong = currentSongIndex - 1;
+            if (previousSong < 0){
+                if(isLooping){
+                    previousSong = songs.size() - 1;
+                } else {
+                    Random random = new Random();
+                    previousSong = random.nextInt(songs.size() + 1);
+                }
             }
         }
 
-        return songs.get(nextSong);
+        return songs.get(previousSong);
     }
-
 
     public void pause(){
         if (player != null){
@@ -186,24 +158,12 @@ public class MusicController {
         return isRepeating;
     }
 
-    public void setRepeating(boolean repeating) {
-        isRepeating = repeating;
-    }
-
     public boolean isLooping() {
         return isLooping;
     }
 
-    public void setLooping(boolean looping) {
-        isLooping = looping;
-    }
-
     public boolean isShuffling() {
         return isShuffling;
-    }
-
-    public void setShuffling(boolean shuffling) {
-        isShuffling = shuffling;
     }
 
     public List<Song> getSongs() {
@@ -212,14 +172,6 @@ public class MusicController {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
-    }
-
-    public List<Song> getShuffledSongs() {
-        return shuffledSongs;
-    }
-
-    public void setShuffledSongs(List<Song> shuffledSongs) {
-        this.shuffledSongs = shuffledSongs;
     }
 
     public Song getCurrentSong() {
@@ -245,7 +197,14 @@ public class MusicController {
         return player != null ? player.getCurrentPosition() : 0;
     }
 
-    public int getNextShuffleSong() {
-        return nextShuffleSong;
+    public Song getLastSong() {
+        if(lastSong == null){
+            lastSong = currentSong;
+        }
+        return lastSong;
+    }
+
+    public void setLastSong(Song lastSong) {
+        this.lastSong = lastSong;
     }
 }

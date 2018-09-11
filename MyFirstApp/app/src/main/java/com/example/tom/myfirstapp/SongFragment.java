@@ -158,8 +158,6 @@ public class SongFragment extends Fragment {
                     artistDao.save(newArtist);
                 }
             }
-            musicController.getShuffledSongs().addAll(musicController.getSongs());
-            Collections.shuffle(musicController.getShuffledSongs());
 
             cursor.close();
         }
@@ -192,7 +190,7 @@ public class SongFragment extends Fragment {
     public void play(View view){
         musicController.play(getActivity());
         switchPlayButtonBackground();
-        saveLastPlayedSong();
+        saveLastPlayedSong(); // TODO UPDATE UI
 //
 //        progressBar = findViewById(R.id.progressBar);
 //        progressBar.setProgress(0);
@@ -221,7 +219,7 @@ public class SongFragment extends Fragment {
     }
 
     public void handleNextSong(){
-        musicController.play(getActivity(), musicController.handleNextSong());
+        musicController.play(getActivity(), musicController.getNextSong());
     }
 
     public void routeSongDetail(View view){

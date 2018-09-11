@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
                 musicController.getSongs().add(new Song(id, title, new Artist(artist), path));
             }
-            musicController.getShuffledSongs().addAll(musicController.getSongs());
-            Collections.shuffle(musicController.getShuffledSongs());
 
             cursor.close();
         }
@@ -226,22 +224,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void next(View view){
-        handleNextSong();
-        //listView.setItemChecked(musicController.getNextShuffleSong(), true);
-        //View songView = adapter.getView(musicController.getSongs().get(1).toString());
-        //check & mark next song
+        Song nextSong = musicController.getNextSong();
+        handleNextSong(nextSong);
+        int pos = adapter.getItemByName(nextSong.getTitle());
+        listView.setItemChecked(pos, true);
     }
 
     public void previous(View view){
-        handlePreviousSong();
+        Song previousSong = musicController.getPreviousSong();
+        handlePreviousSong(previousSong);
+        int pos = adapter.getItemByName(previousSong.getTitle());
+        listView.setItemChecked(pos, true);
     }
 
-    public void handleNextSong(){
-        musicController.play(this, musicController.handleNextSong());
+    public void handleNextSong(Song nextSong){
+        musicController.play(this, nextSong);//musicController.handleNextSong());
     }
 
-    public void handlePreviousSong(){
-        musicController.play(this, musicController.handlePreviousSong());
+    public void handlePreviousSong(Song previousSong){
+        musicController.play(this, previousSong);
     }
 
     public void pause(){
@@ -368,6 +369,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Object getItem(int position) {
             return null;
+        }
+
+        public int getItemByName(String name){
+            for(int i = 0; musicController.getSongs().size() > i; i++){
+                if (musicController.getSongs().get(i).getTitle().equals(name)){
+                    return i;
+                }
+            }
+            return -1;
         }
 
         @Override
