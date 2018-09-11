@@ -40,7 +40,6 @@ public class PreferenceManager {
         String songJson = sharedPreferences.getString(PREF_LAST_PLAYED_SONG, null);
 
         if (songJson == null){
-            //TODO INIT DEFAULT SONG
             return songDao.getFirst();
         }
         return gsonBuilder.create().fromJson(songJson, Song.class);

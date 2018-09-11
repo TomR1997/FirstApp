@@ -65,9 +65,7 @@ public class SongDAO {
             }
             cursor.close();
         }
-        if (song == null){
-            return null;
-        }
+
         return song;
     }
 }
