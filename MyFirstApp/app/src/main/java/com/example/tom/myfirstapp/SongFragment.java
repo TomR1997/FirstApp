@@ -115,7 +115,7 @@ public class SongFragment extends Fragment {
     }
 
     public void addToListView(){
-        getMusic();
+        musicController.getMusic(getContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,98 +129,27 @@ public class SongFragment extends Fragment {
 
     }
 
-    public void getMusic(){
-        ContentResolver contentResolver = Objects.requireNonNull(getActivity()).getContentResolver();
-        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0 ";
-        String order = MediaStore.Audio.Media.TITLE + " ASC";
-        Cursor cursor = contentResolver.query(uri, null, selection, null, order);
-
-        if (cursor != null && cursor.moveToFirst()){
-            while(cursor.moveToNext()){
-                long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-                String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-//                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-//                if (artist.equalsIgnoreCase("<unknown>")){
-//                    artist = retrieveArtist(title);
-//                }
-                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)).equals("<unknown>") ?
-                        "Unknown artist" : cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-                String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-                //String albumId = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
-                //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
-
-                Artist newArtist = new Artist(artist);
-                Song newSong = new Song(id, title, newArtist, path);
-
-                musicController.getSongs().add(newSong);
-                songDao.save(newSong);
-                if(!newArtist.getName().equals("Unknown artist")){
-                    artistDao.save(newArtist);
-                }
-            }
-
-            cursor.close();
-        }
-    }
-
     public void play(Song song){
         musicController.play(getActivity(), song);
         switchPlayButtonBackground();
         saveLastPlayedSong();
-//
-//        progressBar = findViewById(R.id.progressBar);
-//        progressBar.setProgress(0);
-//        progressBar.setMax(musicController.getSongDuration());
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while(musicController.getSongProgress() < musicController.getSongDuration()){
-//                    progressHandler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            progressBar.setProgress(musicController.getSongProgress());
-//                        }
-//                    });
-//                }
-//            }
-//        }).start();
     }
 
     public void play(View view){
         musicController.play(getActivity());
         switchPlayButtonBackground();
         saveLastPlayedSong(); // TODO UPDATE UI
-//
-//        progressBar = findViewById(R.id.progressBar);
-//        progressBar.setProgress(0);
-//        progressBar.setMax(musicController.getSongDuration());
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while(musicController.getSongProgress() < musicController.getSongDuration()){
-//                    progressHandler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            progressBar.setProgress(musicController.getSongProgress());
-//                        }
-//                    });
-//                }
-//            }
-//        }).start();
     }
 
     public void next(View view){
-        handleNextSong();
-        //listView.setItemChecked(musicController.getNextShuffleSong(), true);
-        //View songView = adapter.getView(musicController.getSongs().get(1).toString());
-        //check & mark next song
+        Song nextSong = musicController.getNextSong();
+        handleNextSong(nextSong);
+        int pos = adapter.getItemByName(nextSong.getTitle());
+        listView.setItemChecked(pos, true);
     }
 
-    public void handleNextSong(){
-        musicController.play(getActivity(), musicController.getNextSong());
+    public void handleNextSong(Song nextSong){
+        musicController.play(getActivity(), nextSong);
     }
 
     public void routeSongDetail(View view){
@@ -283,6 +212,15 @@ public class SongFragment extends Fragment {
         @Override
         public Object getItem(int position) {
             return songs.get(position);
+        }
+
+        public int getItemByName(String name){
+            for(int i = 0; musicController.getSongs().size() > i; i++){
+                if (musicController.getSongs().get(i).getTitle().equals(name)){
+                    return i;
+                }
+            }
+            return -1;
         }
 
         @Override

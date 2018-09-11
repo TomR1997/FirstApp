@@ -1,13 +1,20 @@
 package provider;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.provider.MediaStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
+import dao.ArtistDAO;
+import dao.SongDAO;
+import domain.Artist;
 import domain.Song;
 
 public class MusicController {
@@ -29,6 +36,40 @@ public class MusicController {
         isLooping = false;
         isShuffling = false;
         songs = new ArrayList<>();
+    }
+
+    public void getMusic(Context context){
+        SongDAO songDao = new SongDAO(context);
+        ArtistDAO artistDao = new ArtistDAO(context);
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0 ";
+        String order = MediaStore.Audio.Media.TITLE + " ASC";
+        Cursor cursor = contentResolver.query(uri, null, selection, null, order);
+
+        if (cursor != null && cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
+                String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)).equals("<unknown>") ?
+                        "Unknown artist" : cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+                String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                //String albumId = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)));
+                //String albumCover = cursor.getString((cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
+
+                Artist newArtist = new Artist(artist);
+                Song newSong = new Song(id, title, newArtist, path);
+
+                songs.add(newSong);
+                songDao.save(newSong);
+                if(!newArtist.getName().equals("Unknown artist")){
+                    artistDao.save(newArtist);
+                }
+            }
+
+            cursor.close();
+        }
     }
 
     public void shuffle(){
