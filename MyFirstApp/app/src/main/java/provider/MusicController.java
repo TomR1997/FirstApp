@@ -101,7 +101,10 @@ public class MusicController {
         if(isRepeating){
             return currentSong;
         } else if (isShuffling){
-            nextSong = random.nextInt(songs.size() + 1);
+            nextSong = currentSongIndex;
+            while(nextSong == currentSongIndex){
+                nextSong = random.nextInt(songs.size());
+            }
         } else {
             nextSong = currentSongIndex + 1;
             if (nextSong >= songs.size()){
@@ -109,7 +112,10 @@ public class MusicController {
                     nextSong = 0;
                 }
                 else {
-                    nextSong = random.nextInt(songs.size() + 1);
+                    nextSong = currentSongIndex;
+                    while(nextSong == currentSongIndex){
+                        nextSong = random.nextInt(songs.size());
+                    }
                 }
             }
         }
@@ -133,7 +139,10 @@ public class MusicController {
                     previousSong = songs.size() - 1;
                 } else {
                     Random random = new Random();
-                    previousSong = random.nextInt(songs.size() + 1);
+                    previousSong = currentSongIndex;
+                    while(previousSong == currentSongIndex){
+                        previousSong = random.nextInt(songs.size());
+                    }
                 }
             }
         }
@@ -206,5 +215,17 @@ public class MusicController {
 
     public void setLastSong(Song lastSong) {
         this.lastSong = lastSong;
+    }
+
+    public void setRepeating(boolean repeating) {
+        isRepeating = repeating;
+    }
+
+    public void setLooping(boolean looping) {
+        isLooping = looping;
+    }
+
+    public void setShuffling(boolean shuffling) {
+        isShuffling = shuffling;
     }
 }

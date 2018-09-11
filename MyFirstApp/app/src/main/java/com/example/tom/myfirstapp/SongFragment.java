@@ -1,6 +1,7 @@
 package com.example.tom.myfirstapp;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -230,10 +231,14 @@ public class SongFragment extends Fragment {
     }
 
     public void saveLastPlayedSong(){
+        Song currentSong = musicController.getCurrentSong();
+        TextView currentPlayingTextView = Objects.requireNonNull(getActivity()).findViewById(R.id.nowPlayingTextView);
+        currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
+
         sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREF_LAST_PLAYED_SONG, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(PREF_LAST_PLAYED_SONG, gsonBuilder.create().toJson(musicController.getCurrentSong()));
+        editor.putString(PREF_LAST_PLAYED_SONG, gsonBuilder.create().toJson(currentSong));
         editor.apply();
     }
 

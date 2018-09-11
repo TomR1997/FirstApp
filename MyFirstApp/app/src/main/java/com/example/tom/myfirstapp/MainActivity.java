@@ -78,23 +78,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getLastPlayedSong();
-
-//        if (ContextCompat.checkSelfPermission(MainActivity.this,
-//                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-//                    Manifest.permission.READ_EXTERNAL_STORAGE)){
-//                Toast.makeText(MainActivity.this,
-//                        "Read external storage permission is needed to show the songs.",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//            ActivityCompat.requestPermissions(MainActivity.this,
-//                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
-//        } else {
-//            addToListView();
-//        }
-
-        //progressBar = findViewById(R.id.progressBar);
-        //progressBar.setVisibility(ProgressBar.VISIBLE);
     }
 
     public void getMusic(){
@@ -108,10 +91,6 @@ public class MainActivity extends AppCompatActivity {
             while(cursor.moveToNext()){
                 long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
                 String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-//                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-//                if (artist.equalsIgnoreCase("<unknown>")){
-//                    artist = retrieveArtist(title);
-//                }
                 String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)).equals("<unknown>") ?
                         "Unknown artist" : cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                 String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
@@ -122,13 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
             cursor.close();
         }
-    }
-
-    public String retrieveArtist(String title){
-        if(title.contains("-")){
-           return title.substring(0, title.indexOf("-"));
-        }
-        return "Unknown artist";
     }
 
     @Override
