@@ -51,4 +51,23 @@ public class SongDAO {
 
         return songs;
     }
+
+    public Song getFirst(){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + MusicDbContract.FeedEntry.TABLE_NAME_SONG, null);
+        Song song = null;
+
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                String title = cursor.getString(cursor.getColumnIndex(MusicDbContract.FeedEntry.COLUMN_NAME_TITLE));
+                String path = cursor.getString(cursor.getColumnIndex(MusicDbContract.FeedEntry.COLUMN_NAME_SONG_PATH));
+                //TODO GET ARTIST
+                song = new Song(title, new Artist("Test"), path);
+            }
+            cursor.close();
+        }
+        if (song == null){
+            return null;
+        }
+        return song;
+    }
 }
