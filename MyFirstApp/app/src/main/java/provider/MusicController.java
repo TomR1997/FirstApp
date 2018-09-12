@@ -154,6 +154,9 @@ public class MusicController {
             queueIndex++;
             nextSong = songs.indexOf(song);
         } else {
+            if(queueIndex >= queue.size()){
+                queue.clear();
+            }
             if(isRepeating){
                 return currentSong;
             } else if (isShuffling){

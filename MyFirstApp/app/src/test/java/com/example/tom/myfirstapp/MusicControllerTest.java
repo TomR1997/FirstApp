@@ -79,6 +79,14 @@ public class MusicControllerTest {
     }
 
     @Test
+    public void getNextSongClearQueue(){
+        for(int i =0; i <= musicController.getQueue().size(); i++){
+            musicController.getNextSong();
+        }
+        assertTrue(musicController.getQueue().isEmpty());
+    }
+
+    @Test
     public void getPreviousSong(){
         musicController.setCurrentSong(songs.get(songs.size() - 1));
         Song previousSong = musicController.getHistory().get(musicController.getHistoryIndex());
