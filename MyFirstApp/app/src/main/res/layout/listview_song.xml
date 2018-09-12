@@ -44,9 +44,9 @@
         android:layout_height="43dp"
         android:layout_marginEnd="8dp"
         android:background="@null"
-        android:src="@drawable/ic_more_vert_white_24dp"
+        android:contentDescription="@string/menu"
+        android:src="@drawable/ic_more_vert_grey_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/artistTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/songTextView"
-        android:contentDescription="@string/menu" />
+        app:layout_constraintTop_toTopOf="@+id/songTextView" />
 </android.support.constraint.ConstraintLayout>

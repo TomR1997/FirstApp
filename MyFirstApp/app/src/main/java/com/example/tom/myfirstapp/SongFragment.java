@@ -252,7 +252,7 @@ public class SongFragment extends Fragment {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch(item.getItemId()){
                                 case R.id.action_add_queue:
-                                    Toast.makeText(getContext(), "Add to queue", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "Song added to queue", Toast.LENGTH_SHORT).show();
                                     musicController.addToQueue(songs.get(position));
                                     break;
                                 case R.id.action_add_playlist:
