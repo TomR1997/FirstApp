@@ -25,13 +25,22 @@ public class MusicControllerTest {
             Song song = new Song((long)i, "Song" +i, new Artist("Artist"+ i), "");
             songs.add(song);
             musicController.getHistory().add(song);
+            musicController.getQueue().add(song);
         }
         musicController.setSongs(songs);
         musicController.setCurrentSong(songs.get(1));
     }
 
     @Test
+    public void getNextSongQueue(){
+        Song queueSong = musicController.getQueue().get(musicController.getQueueIndex());
+        Song song = musicController.getNextSong();
+        assertEquals(song.getId(), queueSong.getId());
+    }
+
+    @Test
     public void getNextSongTest(){
+        musicController.getQueue().clear();
         Song song = musicController.getNextSong();
         assertEquals(song.getId(), musicController.getCurrentSong().getId() + 1);
     }
@@ -39,6 +48,7 @@ public class MusicControllerTest {
     @Test
     public void getNextSongRepeatTest(){
         musicController.setRepeating(true);
+        musicController.getQueue().clear();
         Song song = musicController.getNextSong();
         assertEquals(song.getId(), musicController.getCurrentSong().getId());
     }
@@ -46,6 +56,7 @@ public class MusicControllerTest {
     @Test
     public void getNextSongShuffleTest(){
         musicController.setShuffling(true);
+        musicController.getQueue().clear();
         Song song = musicController.getNextSong();
         assertTrue(song.getId() != musicController.getCurrentSong().getId());
     }
@@ -53,6 +64,7 @@ public class MusicControllerTest {
     @Test
     public void getNextSongEndLoop(){
         musicController.setLooping(true);
+        musicController.getQueue().clear();
         musicController.setCurrentSong(songs.get(songs.size() - 1));
         Song song = musicController.getNextSong();
         assertEquals(song.getId(), 0);
@@ -61,6 +73,7 @@ public class MusicControllerTest {
     @Test
     public void getNextSongRandom(){
         musicController.setCurrentSong(songs.get(songs.size() - 1));
+        musicController.getQueue().clear();
         Song song = musicController.getNextSong();
         assertTrue(song.getId() != musicController.getCurrentSong().getId());
     }

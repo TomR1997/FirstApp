@@ -26,8 +26,8 @@ public class MusicController {
 
     private int loopCase = 0;
     private int historyIndex = 0;
+    private int queueIndex = 0;
 
-    private Song lastSong;
     private Song currentSong;
 
     private List<Song> songs;
@@ -146,30 +146,38 @@ public class MusicController {
         int nextSong;
         Random random = new Random();
 
-        if(isRepeating){
-            return currentSong;
-        } else if (isShuffling){
-            nextSong = currentSongIndex;
-            while(nextSong == currentSongIndex){
-                nextSong = random.nextInt(songs.size());
+        if(queue.size() > 0 && queueIndex < queue.size()){
+            if (isRepeating){
+                isRepeating = false;
             }
+            Song song = queue.get(queueIndex);
+            queueIndex++;
+            nextSong = songs.indexOf(song);
         } else {
-            nextSong = currentSongIndex + 1;
-            if (nextSong >= songs.size()){
-                if (isLooping){
-                    nextSong = 0;
+            if(isRepeating){
+                return currentSong;
+            } else if (isShuffling){
+                nextSong = currentSongIndex;
+                while(nextSong == currentSongIndex){
+                    nextSong = random.nextInt(songs.size());
                 }
-                else {
-                    nextSong = currentSongIndex;
-                    while(nextSong == currentSongIndex){
-                        nextSong = random.nextInt(songs.size());
+            } else {
+                nextSong = currentSongIndex + 1;
+                if (nextSong >= songs.size()){
+                    if (isLooping){
+                        nextSong = 0;
+                    }
+                    else {
+                        nextSong = currentSongIndex;
+                        while(nextSong == currentSongIndex){
+                            nextSong = random.nextInt(songs.size());
+                        }
                     }
                 }
             }
         }
 
-        lastSong = currentSong;
-        history.add(lastSong);
+        history.add(currentSong);
         return songs.get(nextSong);
     }
 
@@ -259,17 +267,6 @@ public class MusicController {
         return player != null ? player.getCurrentPosition() : 0;
     }
 
-    public Song getLastSong() {
-        if(lastSong == null){
-            lastSong = currentSong;
-        }
-        return lastSong;
-    }
-
-    public void setLastSong(Song lastSong) {
-        this.lastSong = lastSong;
-    }
-
     public void setRepeating(boolean repeating) {
         isRepeating = repeating;
     }
@@ -288,5 +285,13 @@ public class MusicController {
 
     public int getHistoryIndex() {
         return historyIndex;
+    }
+
+    public List<Song> getQueue() {
+        return queue;
+    }
+
+    public int getQueueIndex() {
+        return queueIndex;
     }
 }
