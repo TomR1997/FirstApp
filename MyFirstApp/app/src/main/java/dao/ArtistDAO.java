@@ -23,7 +23,7 @@ public class ArtistDAO {
 
     public boolean save(Artist artist){
         ContentValues values = new ContentValues();
-        values.put(MusicDbContract.FeedEntry.TABLE_NAME_ARTIST, artist.getName());
+        values.put(MusicDbContract.FeedEntry.COLUMN_NAME_NAME, artist.getName());
 
         return db.insert(MusicDbContract.FeedEntry.TABLE_NAME_ARTIST, null, values) > 0;
     }

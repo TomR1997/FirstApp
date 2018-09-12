@@ -21,7 +21,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.GsonBuilder;
 
@@ -230,14 +232,45 @@ public class SongFragment extends Fragment {
 
         @SuppressLint({"ViewHolder", "InflateParams"})
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.listview_song, null);
 
             TextView songView = convertView.findViewById(R.id.songTextView);
             TextView artistView = convertView.findViewById(R.id.artistTextView);
+            final ImageButton textViewOptions = convertView.findViewById(R.id.textViewOptions);
 
             songView.setText(songs.get(position).getTitle());
             artistView.setText(songs.get(position).getArtist().getName());
+
+            textViewOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(getContext(), textViewOptions);
+                    popupMenu.inflate(R.menu.menu_song);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch(item.getItemId()){
+                                case R.id.action_add_queue:
+                                    Toast.makeText(getContext(), "Add to queue", Toast.LENGTH_SHORT).show();
+                                    musicController.addToQueue(songs.get(position));
+                                    break;
+                                case R.id.action_add_playlist:
+                                    Toast.makeText(getContext(), "Add to playlist", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.action_delete_song:
+                                    Toast.makeText(getContext(), "Delete song", Toast.LENGTH_SHORT).show();
+                                    //notifyDataSetChanged();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
 
             return convertView;
         }

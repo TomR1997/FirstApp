@@ -214,6 +214,10 @@ public class MusicController {
         return songs.get(previousSong);
     }
 
+    public void addToQueue(Song song){
+        queue.add(song);
+    }
+
     public void pause(){
         if (player != null){
             player.pause();
