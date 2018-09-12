@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.google.gson.GsonBuilder;
 
 import java.util.Collections;
+import java.util.List;
 
 import provider.MusicController;
 import domain.Artist;
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new SongBaseAdapter();
         listView = findViewById(R.id.listView);
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addToListView(){
         musicController.getMusic(this);
+        adapter = new SongBaseAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -309,6 +311,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class SongBaseAdapter extends BaseAdapter{
+        private Context context;
+        private List<Song> songs = musicController.getSongs();
 
         @Override
         public int getCount() {
@@ -336,16 +340,45 @@ public class MainActivity extends AppCompatActivity {
 
         @SuppressLint({"ViewHolder", "InflateParams"})
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             convertView = getLayoutInflater().inflate(R.layout.listview_song, null);
 
             TextView songView = convertView.findViewById(R.id.songTextView);
             TextView artistView = convertView.findViewById(R.id.artistTextView);
+            final ImageButton textViewOptions = convertView.findViewById(R.id.textViewOptions);
 
-            songView.setText(musicController.getSongs().get(position).getTitle());
-            artistView.setText(musicController.getSongs().get(position).getArtist().getName());
+            songView.setText(songs.get(position).getTitle());
+            artistView.setText(songs.get(position).getArtist().getName());
 
-            //songView.setTag(musicController.getSongs().get(position).getTitle());
+            textViewOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(MainActivity.this, textViewOptions);
+                    popupMenu.inflate(R.menu.menu_song);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch(item.getItemId()){
+                                case R.id.action_add_queue:
+                                    Toast.makeText(MainActivity.this, "Song added to queue", Toast.LENGTH_SHORT).show();
+                                    musicController.addToQueue(songs.get(position));
+                                    break;
+                                case R.id.action_add_playlist:
+                                    Toast.makeText(MainActivity.this, "Add to playlist", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.action_delete_song:
+                                    Toast.makeText(MainActivity.this, "Delete song", Toast.LENGTH_SHORT).show();
+                                    //notifyDataSetChanged();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
 
             return convertView;
         }
