@@ -22,7 +22,9 @@ public class MusicControllerTest {
         musicController = new MusicController();
         songs = new ArrayList<>();
         for (int i = 0; i < 5; i++){
-            songs.add(new Song((long)i, "Song" +i, new Artist("Artist"+ i), ""));
+            Song song = new Song((long)i, "Song" +i, new Artist("Artist"+ i), "");
+            songs.add(song);
+            musicController.getHistory().add(song);
         }
         musicController.setSongs(songs);
         musicController.setCurrentSong(songs.get(1));
@@ -66,8 +68,9 @@ public class MusicControllerTest {
     @Test
     public void getPreviousSong(){
         musicController.setCurrentSong(songs.get(songs.size() - 1));
+        Song previousSong = musicController.getHistory().get(musicController.getHistoryIndex());
         Song song = musicController.getPreviousSong();
-        assertEquals(song.getId(), musicController.getCurrentSong().getId() - 1);
+        assertEquals(song.getId(), previousSong.getId());
     }
 
     @Test
@@ -80,6 +83,7 @@ public class MusicControllerTest {
     @Test
     public void getPreviousSongEndLoop(){
         musicController.setLooping(true);
+        musicController.getHistory().clear();
         musicController.setCurrentSong(songs.get(0));
         Song song = musicController.getPreviousSong();
         assertEquals(song.getId(), songs.size() - 1);
@@ -88,6 +92,7 @@ public class MusicControllerTest {
     @Test
     public void getPreviousSongRandom(){
         musicController.setCurrentSong(songs.get(0));
+        musicController.getHistory().clear();
         Song song = musicController.getPreviousSong();
         assertTrue(song.getId() != musicController.getCurrentSong().getId());
     }

@@ -25,17 +25,22 @@ public class MusicController {
     private boolean isShuffling;
 
     private int loopCase = 0;
+    private int historyIndex = 0;
 
     private Song lastSong;
     private Song currentSong;
 
     private List<Song> songs;
+    private List<Song> history;
+    private List<Song> queue;
 
     public MusicController(){
         isRepeating = false;
         isLooping = false;
         isShuffling = false;
         songs = new ArrayList<>();
+        history = new ArrayList<>();
+        queue = new ArrayList<>();
     }
 
     public void getMusic(Context context){
@@ -102,6 +107,7 @@ public class MusicController {
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+                    history.add(currentSong);
                     getNextSong();
                 }
             });
@@ -121,6 +127,7 @@ public class MusicController {
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
+                    history.add(currentSong);
                     getNextSong();
                 }
             });
@@ -162,6 +169,7 @@ public class MusicController {
         }
 
         lastSong = currentSong;
+        history.add(lastSong);
         return songs.get(nextSong);
     }
 
@@ -171,18 +179,22 @@ public class MusicController {
 
         if(isRepeating){
             return currentSong;
-        } else if(isShuffling){
-            return lastSong;
         } else {
-            previousSong = currentSongIndex - 1;
-            if (previousSong < 0){
-                if(isLooping){
-                    previousSong = songs.size() - 1;
-                } else {
-                    Random random = new Random();
-                    previousSong = currentSongIndex;
-                    while(previousSong == currentSongIndex){
-                        previousSong = random.nextInt(songs.size());
+            if (history.size() > 0 && historyIndex < history.size()){
+                Song song = history.get(historyIndex);
+                historyIndex++;
+                previousSong = songs.indexOf(song);
+            } else {
+                previousSong = currentSongIndex - 1;
+                if (previousSong < 0) {
+                    if (isLooping) {
+                        previousSong = songs.size() - 1;
+                    } else {
+                        Random random = new Random();
+                        previousSong = currentSongIndex;
+                        while (previousSong == currentSongIndex) {
+                            previousSong = random.nextInt(songs.size());
+                        }
                     }
                 }
             }
@@ -268,5 +280,13 @@ public class MusicController {
 
     public void setShuffling(boolean shuffling) {
         isShuffling = shuffling;
+    }
+
+    public List<Song> getHistory() {
+        return history;
+    }
+
+    public int getHistoryIndex() {
+        return historyIndex;
     }
 }
