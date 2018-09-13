@@ -22,7 +22,7 @@ Features:
 - Options screen
 - ~~Save preferences (shuffle, repeat)~~
 - UI manager
-- Prefs manager
+- ~~Prefs manager~~
 - ~~Unit tests~~
 
 Bugs:
