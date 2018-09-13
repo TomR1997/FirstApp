@@ -39,6 +39,7 @@ import domain.Playlist;
 import domain.Song;
 import provider.MusicController;
 import util.PermissionManager;
+import util.PreferenceManager;
 
 public class SongFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "com.example.tom.myfirstapp.MESSAGE";
@@ -56,6 +57,8 @@ public class SongFragment extends Fragment {
     private SongBaseAdapter adapter;
     private ListView listView;
     private MusicController musicController;
+    private PreferenceManager preferenceManager;
+
     private PermissionManager permissionManager;
     private SharedPreferences sharedPreferences;
 
@@ -78,6 +81,8 @@ public class SongFragment extends Fragment {
         playlistDao = new PlaylistDAO(fragmentView.getContext());
         artistDao = new ArtistDAO(fragmentView.getContext());
 
+        preferenceManager = new PreferenceManager(fragmentView.getContext());
+
         permissionManager = new PermissionManager();
         musicController = new MusicController();
 
@@ -95,9 +100,11 @@ public class SongFragment extends Fragment {
             addToListView();
         }
 
-        getLastPlayedSong();
+        Song lastPlayedSong = preferenceManager.getLastPlayedSong();
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
-        currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
+        if(lastPlayedSong != null){
+            currentPlayingTextView.setText(lastPlayedSong.getTitle());
+        }
         currentPlayingTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,20 +178,6 @@ public class SongFragment extends Fragment {
 
         editor.putString(PREF_LAST_PLAYED_SONG, gsonBuilder.create().toJson(currentSong));
         editor.apply();
-    }
-
-    public void getLastPlayedSong(){
-        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREF_LAST_PLAYED_SONG, Context.MODE_PRIVATE);
-        String songJson = sharedPreferences.getString(PREF_LAST_PLAYED_SONG, "");
-        if(!songJson.isEmpty()){
-            musicController.setCurrentSong(gsonBuilder.create().fromJson(songJson, Song.class));
-        }
-        else {
-            Song song = musicController.getSongs().get(0);
-            if (song != null){
-                musicController.setCurrentSong(song);
-            }
-        }
     }
 
     public void switchPlayButtonBackground(){
