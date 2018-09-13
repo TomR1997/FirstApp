@@ -11,7 +11,7 @@ Features:
   - Create shared playlists with friends
 - Songs
   - Song progress bar (with slider)
-  - Add to queue system
+  - ~~Add to queue system~~
   - Delete songs
   - Get song/album cover
 - Splash screen populate list/database
@@ -20,14 +20,15 @@ Features:
 - Switch themes
 - Search bar
 - Options screen
-- Save preferences (shuffle, repeat)
+- ~~Save preferences (shuffle, repeat)~~
 - UI manager
 - Prefs manager
+- ~~Unit tests~~
 
 Bugs:
 - Recycler view onClick/mark song
-- Next song doesn't get marked
-- List Artist should be hashset
-- Last played song doens't get updated (onClick)
+- ~~Next song doesn't get marked~~
+- ~~List Artist should be hashset~~
+- ~~Last played song doens't get updated (onClick)~~
 - Background shouldn't be moving in animation to SongDetail
 - RecyclerView moves mediabar
