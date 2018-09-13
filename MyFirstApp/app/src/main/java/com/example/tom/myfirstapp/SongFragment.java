@@ -84,7 +84,7 @@ public class SongFragment extends Fragment {
         preferenceManager = new PreferenceManager(fragmentView.getContext());
 
         permissionManager = new PermissionManager();
-        musicController = new MusicController();
+        musicController = new MusicController(fragmentView.getContext());
 
         /*if(permissionManager.requestPermissionFragment(getActivity())){
             getMusic();
@@ -124,7 +124,7 @@ public class SongFragment extends Fragment {
     }
 
     public void addToListView(){
-        musicController.getMusic(getContext());
+        musicController.getMusic();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -16,6 +16,7 @@ import dao.ArtistDAO;
 import dao.SongDAO;
 import domain.Artist;
 import domain.Song;
+import util.PreferenceManager;
 
 public class MusicController {
     private MediaPlayer player;
@@ -28,22 +29,27 @@ public class MusicController {
     private int historyIndex = 0;
     private int queueIndex = 0;
 
+    private Context context;
     private Song currentSong;
+    private PreferenceManager preferenceManager;
 
     private List<Song> songs;
     private List<Song> history;
     private List<Song> queue;
 
-    public MusicController(){
+
+    public MusicController(Context context){
         isRepeating = false;
         isLooping = false;
         isShuffling = false;
         songs = new ArrayList<>();
         history = new ArrayList<>();
         queue = new ArrayList<>();
+        this.context = context;
+        preferenceManager = new PreferenceManager(context);
     }
 
-    public void getMusic(Context context){
+    public void getMusic(){
         SongDAO songDao = new SongDAO(context);
         ArtistDAO artistDao = new ArtistDAO(context);
 

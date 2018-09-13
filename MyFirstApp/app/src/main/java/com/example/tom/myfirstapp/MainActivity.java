@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        musicController = new MusicController();
+        musicController = new MusicController(this);
         permissionManager = new PermissionManager();
 
         if(permissionManager.requestPermission(this)){
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addToListView(){
-        musicController.getMusic(this);
+        musicController.getMusic();
         adapter = new SongBaseAdapter();
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
