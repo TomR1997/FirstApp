@@ -27,11 +27,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
         TextView songTextView;
         TextView artistTextView;
         ImageButton textViewOptions;
-        private MusicController musicController = new MusicController();
+        private MusicController musicController;
         private SongDAO songDao;
 
         MyViewHolder(View v) {
             super(v);
+            musicController = new MusicController(v.getContext());
             songDao = new SongDAO(v.getContext());
             musicController.setSongs(songDao.getAll());
             songTextView = itemView.findViewById(R.id.songTextView);

@@ -40,7 +40,7 @@ public class ArtistFragment extends Fragment {
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.artisttab, container, false);
 
-        musicController = new MusicController();
+        musicController = new MusicController(fragmentView.getContext());
         adapter = new ArtistAdapter();
         listView = fragmentView.findViewById(R.id.artistFragmentView);
         addToListView();
