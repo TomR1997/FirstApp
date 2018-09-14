@@ -85,6 +85,7 @@ public class MusicController {
 
     public void shuffle(){
         isShuffling = !isShuffling;
+        preferenceManager.saveIsShuffling(isShuffling);
     }
 
     public void loop(){
@@ -102,10 +103,12 @@ public class MusicController {
                 loopCase = -1;
                 break;
         }
+        preferenceManager.saveIsLooping(isLooping);
+        preferenceManager.saveIsRepeating(isRepeating);
         loopCase++;
     }
 
-    public void play(Context context, Song song){
+    public void play(Song song){
         currentSong = song;
         releasePlayer();
         if (player == null){
@@ -121,9 +124,10 @@ public class MusicController {
         if (player != null) {
             player.start();
         }
+        preferenceManager.saveLastPlayedSong(currentSong);
     }
 
-    public void play(Context context){
+    public void play(){
         if (currentSong == null) {
             getCurrentSong();
         }
@@ -145,6 +149,7 @@ public class MusicController {
                 player.start();
             }
         }
+        preferenceManager.saveLastPlayedSong(currentSong);
     }
 
     public Song getNextSong(){

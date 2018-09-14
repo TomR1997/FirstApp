@@ -139,15 +139,13 @@ public class SongFragment extends Fragment {
     }
 
     public void play(Song song){
-        musicController.play(getActivity(), song);
+        musicController.play(song);
         switchPlayButtonBackground();
-        saveLastPlayedSong();
     }
 
     public void play(View view){
-        musicController.play(getActivity());
+        musicController.play();
         switchPlayButtonBackground();
-        saveLastPlayedSong(); // TODO UPDATE UI
     }
 
     public void next(View view){
@@ -158,7 +156,7 @@ public class SongFragment extends Fragment {
     }
 
     public void handleNextSong(Song nextSong){
-        musicController.play(getActivity(), nextSong);
+        musicController.play(nextSong);
     }
 
     public void routeSongDetail(View view){
@@ -166,18 +164,6 @@ public class SongFragment extends Fragment {
         intent.putExtra(SONG_DETAIL, gsonBuilder.create().toJson(musicController.getCurrentSong()));
         startActivity(intent);
         Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
-    }
-
-    public void saveLastPlayedSong(){
-        Song currentSong = musicController.getCurrentSong();
-        TextView currentPlayingTextView = Objects.requireNonNull(getActivity()).findViewById(R.id.nowPlayingTextView);
-        currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
-
-        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(PREF_LAST_PLAYED_SONG, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(PREF_LAST_PLAYED_SONG, gsonBuilder.create().toJson(currentSong));
-        editor.apply();
     }
 
     public void switchPlayButtonBackground(){

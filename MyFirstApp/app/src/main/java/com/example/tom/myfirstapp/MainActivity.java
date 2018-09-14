@@ -127,9 +127,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play(Song song){
-        musicController.play(this, song);
+        musicController.play(song);
         switchPlayButtonBackground();
-        saveLastPlayedSong();
 //
 //        progressBar = findViewById(R.id.progressBar);
 //        progressBar.setProgress(0);
@@ -151,9 +150,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void play(View view){
-        musicController.play(this);
+        musicController.play();
         switchPlayButtonBackground();
-        saveLastPlayedSong();
 //
 //        progressBar = findViewById(R.id.progressBar);
 //        progressBar.setProgress(0);
@@ -189,11 +187,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleNextSong(Song nextSong){
-        musicController.play(this, nextSong);//musicController.handleNextSong());
+        musicController.play(nextSong);//musicController.handleNextSong());
     }
 
     public void handlePreviousSong(Song previousSong){
-        musicController.play(this, previousSong);
+        musicController.play(previousSong);
     }
 
     public void pause(){
