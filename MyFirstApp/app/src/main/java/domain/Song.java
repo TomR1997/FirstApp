@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Song {
     private long id;
     private String title;
@@ -54,5 +56,23 @@ public class Song {
     @Override
     public String toString(){
         return artist.getName() + " - " + title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (o == this) return true;
+        if (!(o instanceof Song)) {
+            return false;
+        }
+        Song song = (Song) o;
+        return Objects.equals(title, song.title) &&
+                Objects.equals(artist, song.artist) &&
+                Objects.equals(path, song.path);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id, title, artist, path);
     }
 }

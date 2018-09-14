@@ -19,7 +19,7 @@ import domain.Song;
 import util.PreferenceManager;
 
 public class MusicController {
-    private MediaPlayer player;
+    private static MediaPlayer player;
 
     private boolean isRepeating;
     private boolean isLooping;
@@ -224,7 +224,7 @@ public class MusicController {
 
         return songs.get(previousSong);
     }
-
+    
     public void addToQueue(Song song){
         queue.add(song);
     }

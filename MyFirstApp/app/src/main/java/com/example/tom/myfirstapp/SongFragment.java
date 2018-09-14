@@ -101,6 +101,7 @@ public class SongFragment extends Fragment {
         }
 
         Song lastPlayedSong = preferenceManager.getLastPlayedSong();
+        musicController.setCurrentSong(lastPlayedSong);
         TextView currentPlayingTextView = fragmentView.findViewById(R.id.nowPlayingTextView);
         if(lastPlayedSong != null){
             currentPlayingTextView.setText(lastPlayedSong.getTitle());
@@ -141,22 +142,25 @@ public class SongFragment extends Fragment {
     public void play(Song song){
         musicController.play(song);
         switchPlayButtonBackground();
+        updateLastPlayedSong();
     }
 
     public void play(View view){
         musicController.play();
         switchPlayButtonBackground();
+        updateLastPlayedSong();
     }
 
     public void next(View view){
         Song nextSong = musicController.getNextSong();
-        handleNextSong(nextSong);
+        musicController.play(nextSong);
         int pos = adapter.getItemByName(nextSong.getTitle());
         listView.setItemChecked(pos, true);
     }
 
-    public void handleNextSong(Song nextSong){
-        musicController.play(nextSong);
+    public void updateLastPlayedSong(){
+        TextView currentPlayingTextView = Objects.requireNonNull(getActivity()).findViewById(R.id.nowPlayingTextView);
+        currentPlayingTextView.setText(musicController.getCurrentSong().getTitle());
     }
 
     public void routeSongDetail(View view){

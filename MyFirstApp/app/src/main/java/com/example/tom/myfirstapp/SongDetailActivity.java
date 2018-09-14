@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.gson.GsonBuilder;
 
@@ -23,6 +24,7 @@ public class SongDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_detail);
         musicController = new MusicController(this);
+        musicController.getMusic();
         preferenceManager = new PreferenceManager(this);
 
         Intent intent = getIntent();
@@ -32,8 +34,6 @@ public class SongDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle(musicController.getCurrentSong().getTitle());
         setSupportActionBar(toolbar);
-
-        musicController.play();
 
         musicController.setShuffling(preferenceManager.getIsShuffling());
         musicController.setLooping(preferenceManager.getIsLooping());
@@ -61,11 +61,13 @@ public class SongDetailActivity extends AppCompatActivity {
     public void previous(View view){
         Song previousSong = musicController.getPreviousSong();
         musicController.play(previousSong);
+        updateCurrentSongTextView();
     }
 
     public void next(View view){
         Song nextSong = musicController.getNextSong();
         musicController.play(nextSong);
+        updateCurrentSongTextView();
     }
 
     public void switchPlayButtonBackground(){
@@ -95,5 +97,10 @@ public class SongDetailActivity extends AppCompatActivity {
         } else {
             shuffleButton.setImageResource(R.drawable.baseline_shuffle_white_36dp);
         }
+    }
+
+    public void updateCurrentSongTextView(){
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar.setTitle(musicController.getCurrentSong().getTitle());
     }
 }
