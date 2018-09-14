@@ -28,7 +28,7 @@ Features:
 Bugs:
 - Recycler view onClick/mark song
 - ~~Next song doesn't get marked~~
-- ~~List Artist should be hashset~~
+- Duplicate artists
 - ~~Last played song doens't get updated (onClick)~~
 - Background shouldn't be moving in animation to SongDetail
 - RecyclerView moves mediabar
