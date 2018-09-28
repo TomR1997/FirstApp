@@ -49,6 +49,8 @@ public class MusicController {
         preferenceManager = new PreferenceManager(context);
     }
 
+    public MusicController(){}
+
     public void getMusic(){
         SongDAO songDao = new SongDAO(context);
         ArtistDAO artistDao = new ArtistDAO(context);
