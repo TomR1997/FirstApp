@@ -26,9 +26,9 @@ Features:
 - ~~Unit tests~~
 
 Bugs:
-- Recycler view onClick/mark song
+- ~~Recycler view onClick/mark song~~
 - ~~Next song doesn't get marked~~
 - Duplicate artists
 - ~~Last played song doens't get updated (onClick)~~
 - Background shouldn't be moving in animation to SongDetail
-- RecyclerView moves mediabar
+- ~~RecyclerView moves mediabar~~
